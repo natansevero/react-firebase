@@ -2,11 +2,17 @@ import React, { Component } from 'react'
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
+import Card from "@material-ui/core/Card"
+import CardContent from "@material-ui/core/CardContent"
 import { withStyles } from '@material-ui/core/styles';
+import { Route } from 'react-router-dom'
+import { urls, privateUrls } from '../../utils/urlUtils'
 
 import './App.css'
 
 import { DataTable } from '../DataTable/DataTable'
+import { Welcome } from '../Welcome/Welcome'
+import Add from '../Add/Add'
 
 import FirebaseService from '../../services/FirebaseService';
 
@@ -46,7 +52,29 @@ class App extends Component {
                                 </Typography>
                         </Toolbar>
                     </AppBar>
-                    <DataTable data={this.state.data} />
+                    <Card style={{ margin: '50px' }}>
+                        <CardContent>
+                            <Route exact
+                                path={urls.home.path}
+                                render={(props) => <Welcome {...props} />}
+                            />
+
+                            <Route exact
+                                path={urls.data.path}
+                                render={(props) => <DataTable {...props} data={this.state.data} />}
+                            />
+
+                            <Route exact
+                                path={urls.add.path}
+                                render={(props) => <Add {...props} />}
+                            />
+
+                            <Route exact
+                                path={privateUrls.edit.path}
+                                render={(props) => <Add {...props} />}
+                            />
+                        </CardContent>
+                    </Card>
                 </React.Fragment>
             </div>
         )
